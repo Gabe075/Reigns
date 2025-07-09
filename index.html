@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>O Legado do Regente - Jogo de Decisões</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <!-- Tela inicial -->
+        <div id="start-screen" class="screen active">
+            <div class="start-content">
+                <h1>👑 O Legado do Regente</h1>
+                <p>Um jogo de tomada de decisões onde cada escolha molda o destino do seu reino.</p>
+                
+                <div class="game-intro">
+                    <h3>Como Jogar:</h3>
+                    <div class="intro-text">
+                        <p>🏰 Você é o novo regente de um reino em tempos turbulentos</p>
+                        <p>⚖️ Mantenha o equilíbrio entre os quatro pilares do reino:</p>
+                        <div class="pillars-preview">
+                            <div class="pillar-item">❤️ <strong>Povo</strong> - Felicidade e lealdade</div>
+                            <div class="pillar-item">💰 <strong>Tesouro</strong> - Riqueza do reino</div>
+                            <div class="pillar-item">⚔️ <strong>Exército</strong> - Força militar</div>
+                            <div class="pillar-item">⛪ <strong>Igreja</strong> - Poder religioso</div>
+                        </div>
+                        <p>⚠️ Cuidado! Extremos em qualquer pilar podem levar ao fim do seu reinado</p>
+                    </div>
+                </div>
+                
+                <button id="start-btn" class="btn btn-primary">Começar Novo Reinado</button>
+                <button id="about-btn" class="btn btn-secondary">Sobre o Jogo</button>
+            </div>
+        </div>
+
+        <!-- Tela do jogo -->
+        <div id="game-screen" class="screen">
+            <!-- Barras de atributos -->
+            <div class="attributes-panel">
+                <div class="attribute" id="people-attr">
+                    <div class="attr-icon">❤️</div>
+                    <div class="attr-info">
+                        <div class="attr-name">Povo</div>
+                        <div class="attr-bar">
+                            <div class="attr-fill" id="people-fill"></div>
+                        </div>
+                        <div class="attr-value" id="people-value">50</div>
+                    </div>
+                </div>
+                
+                <div class="attribute" id="treasury-attr">
+                    <div class="attr-icon">💰</div>
+                    <div class="attr-info">
+                        <div class="attr-name">Tesouro</div>
+                        <div class="attr-bar">
+                            <div class="attr-fill" id="treasury-fill"></div>
+                        </div>
+                        <div class="attr-value" id="treasury-value">50</div>
+                    </div>
+                </div>
+                
+                <div class="attribute" id="army-attr">
+                    <div class="attr-icon">⚔️</div>
+                    <div class="attr-info">
+                        <div class="attr-name">Exército</div>
+                        <div class="attr-bar">
+                            <div class="attr-fill" id="army-fill"></div>
+                        </div>
+                        <div class="attr-value" id="army-value">50</div>
+                    </div>
+                </div>
+                
+                <div class="attribute" id="church-attr">
+                    <div class="attr-icon">⛪</div>
+                    <div class="attr-info">
+                        <div class="attr-name">Igreja</div>
+                        <div class="attr-bar">
+                            <div class="attr-fill" id="church-fill"></div>
+                        </div>
+                        <div class="attr-value" id="church-value">50</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Área principal do jogo -->
+            <div class="game-main">
+                <!-- Imagem do personagem/cenário -->
+                <div class="character-area">
+                    <div class="character-image" id="character-image">
+                        <img id="character-img" src="" alt="Personagem" style="display: none;">
+                        <div class="loading-placeholder" id="image-loading">
+                            <div class="loading-spinner"></div>
+                            <p>Gerando imagem...</p>
+                        </div>
+                    </div>
+                    <div class="character-name" id="character-name">Carregando...</div>
+                </div>
+
+                <!-- Texto do cenário -->
+                <div class="scenario-area">
+                    <div class="scenario-text" id="scenario-text">
+                        <div class="loading-text">
+                            <div class="loading-dots"></div>
+                            <p>Gerando novo cenário...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Opções de decisão -->
+                <div class="decision-area">
+                    <button class="decision-btn left-decision" id="left-decision">
+                        <div class="decision-icon">👈</div>
+                        <div class="decision-text" id="left-text">Carregando...</div>
+                    </button>
+                    
+                    <button class="decision-btn right-decision" id="right-decision">
+                        <div class="decision-icon">👉</div>
+                        <div class="decision-text" id="right-text">Carregando...</div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Contador de decisões -->
+            <div class="game-info">
+                <div class="decision-counter">
+                    <span>Decisões tomadas: <span id="decision-count">0</span></span>
+                </div>
+                <button id="menu-btn" class="btn btn-small">📋 Menu</button>
+            </div>
+        </div>
+
+        <!-- Tela de fim de jogo -->
+        <div id="end-screen" class="screen">
+            <div class="end-content">
+                <h1 id="end-title">👑 Fim do Reinado</h1>
+                <div class="end-image" id="end-image">
+                    <div class="end-icon" id="end-icon">⚰️</div>
+                </div>
+                <div class="end-text" id="end-text">
+                    <p>Seu reinado chegou ao fim...</p>
+                </div>
+                <div class="end-stats">
+                    <h3>Estatísticas do Reinado:</h3>
+                    <div class="stat-item">
+                        <span>Decisões tomadas:</span>
+                        <span id="final-decisions">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span>Causa do fim:</span>
+                        <span id="end-cause">Desconhecida</span>
+                    </div>
+                </div>
+                <div class="end-actions">
+                    <button id="restart-btn" class="btn btn-primary">🔄 Novo Reinado</button>
+                    <button id="back-menu-btn" class="btn btn-secondary">📋 Menu Principal</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tela sobre o jogo -->
+        <div id="about-screen" class="screen">
+            <div class="about-content">
+                <h1>📖 Sobre o Jogo</h1>
+                <div class="about-text">
+                    <h3>O Legado do Regente</h3>
+                    <p>Um jogo de tomada de decisões inspirado em Reigns, onde você governa um reino medieval enfrentando dilemas complexos que afetam o equilíbrio do poder.</p>
+                    
+                    <h3>🎯 Objetivo</h3>
+                    <p>Mantenha o equilíbrio entre os quatro pilares do reino: Povo, Tesouro, Exército e Igreja. Evite que qualquer um deles atinja níveis extremos (muito alto ou muito baixo), pois isso levará ao fim do seu reinado.</p>
+                    
+                    <h3>🎮 Como Jogar</h3>
+                    <p>A cada cenário, você será apresentado a um personagem com um dilema. Escolha entre duas opções clicando nos botões à esquerda ou à direita. Cada decisão afetará os atributos do reino de forma diferente.</p>
+                    
+                    <h3>🤖 Tecnologia</h3>
+                    <p>Este jogo utiliza inteligência artificial para gerar cenários únicos e imagens dos personagens, proporcionando uma experiência sempre nova e surpreendente.</p>
+                </div>
+                <button id="back-start-btn" class="btn btn-primary">🏠 Voltar ao Início</button>
+            </div>
+        </div>
+
+        <!-- Loading overlay -->
+        <div id="loading-overlay" class="loading-overlay hidden">
+            <div class="loading-content">
+                <div class="loading-spinner large"></div>
+                <p id="loading-text">Carregando...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de configuração da API -->
+    <div id="api-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>🔑 Configuração da API</h3>
+                <button id="close-api-modal" class="close-btn">✕</button>
+            </div>
+            <div class="modal-body">
+                <p>Para usar este jogo, você precisa de uma chave da API do Google Gemini (gratuita):</p>
+                <ol>
+                    <li>Acesse <a href="https://ai.google.dev/" target="_blank">Google AI Studio</a></li>
+                    <li>Crie uma conta e gere uma chave API gratuita</li>
+                    <li>Cole a chave no campo abaixo:</li>
+                </ol>
+                <input type="password" id="api-key-input" placeholder="Cole sua chave API aqui..." />
+                <div class="modal-actions">
+                    <button id="save-api-key" class="btn btn-primary">Salvar e Continuar</button>
+                    <button id="demo-mode" class="btn btn-secondary">Modo Demo (sem IA)</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Overlay para modal -->
+    <div id="modal-overlay" class="modal-overlay hidden"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
